@@ -23,6 +23,7 @@ import org.apache.calcite.jdbc.CalcitePrepare;
 import org.apache.calcite.jdbc.CalciteSchema;
 import org.apache.calcite.jdbc.ContextSqlValidator;
 import org.apache.calcite.linq4j.Ord;
+import org.apache.calcite.linq4j.function.Experimental;
 import org.apache.calcite.materialize.MaterializationKey;
 import org.apache.calcite.materialize.MaterializationService;
 import org.apache.calcite.model.JsonSchema;
@@ -88,6 +89,7 @@ import org.apache.calcite.util.NlsString;
 import org.apache.calcite.util.Pair;
 import org.apache.calcite.util.Util;
 
+import com.google.auto.service.AutoService;
 import com.google.common.collect.ImmutableList;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -115,6 +117,8 @@ import static java.util.Objects.requireNonNull;
  * the command to an appropriate {@code execute} method. For example,
  * "CREATE TABLE" ({@link SqlCreateTable}) is dispatched to
  * {@link #execute(SqlCreateTable, CalcitePrepare.Context)}. */
+@AutoService(DdlExecutor.class)
+@Experimental
 public class ServerDdlExecutor extends DdlExecutorImpl {
   /** Singleton instance. */
   public static final ServerDdlExecutor INSTANCE = new ServerDdlExecutor();
@@ -132,11 +136,6 @@ public class ServerDdlExecutor extends DdlExecutorImpl {
         }
       };
 
-  /** Creates a ServerDdlExecutor.
-   * Protected only to allow sub-classing;
-   * use {@link #INSTANCE} where possible. */
-  protected ServerDdlExecutor() {
-  }
 
   /** Returns the schema in which to create an object;
    * the left part is null if the schema does not exist. */
@@ -241,7 +240,7 @@ public class ServerDdlExecutor extends DdlExecutorImpl {
       Util.discard(rowCount);
       prepare.close();
     } catch (SqlParseException | ValidationException
-        | RelConversionException | SQLException e) {
+             | RelConversionException | SQLException e) {
       throw Util.throwAsRuntime(e);
     }
   }

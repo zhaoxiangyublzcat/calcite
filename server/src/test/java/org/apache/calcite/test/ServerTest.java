@@ -36,6 +36,7 @@ import org.apache.calcite.sql.ddl.SqlDropFunction;
 import org.apache.calcite.sql.ddl.SqlDropMaterializedView;
 import org.apache.calcite.sql.ddl.SqlDropSchema;
 import org.apache.calcite.sql.ddl.SqlTruncateTable;
+import org.apache.calcite.sql.parser.ddl.SqlDdlParserImpl;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -74,7 +75,7 @@ class ServerTest {
     return DriverManager.getConnection(URL,
         CalciteAssert.propBuilder()
             .set(CalciteConnectionProperty.PARSER_FACTORY,
-                ServerDdlExecutor.class.getName() + "#PARSER_FACTORY")
+                SqlDdlParserImpl.class.getName() + "#FACTORY")
             .set(CalciteConnectionProperty.MATERIALIZATIONS_ENABLED,
                 "true")
             .set(CalciteConnectionProperty.FUN, "standard,oracle")

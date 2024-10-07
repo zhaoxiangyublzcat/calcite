@@ -29,8 +29,10 @@ dependencies {
 
     implementation("com.google.guava:guava")
     implementation("org.slf4j:slf4j-api")
+    implementation("com.google.auto.service:auto-service")
 
     annotationProcessor("org.immutables:value")
+    annotationProcessor("com.google.auto.service:auto-service")
     compileOnly("org.immutables:value-annotations")
 
     testImplementation(project(":testkit"))
