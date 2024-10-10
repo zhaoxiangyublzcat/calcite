@@ -20,6 +20,9 @@ import org.apache.calcite.linq4j.function.Experimental;
 import org.apache.calcite.server.DdlExecutor;
 
 import java.io.Reader;
+import java.util.List;
+import java.util.ServiceLoader;
+import java.util.ServiceLoader.Provider;
 
 /**
  * Factory for
@@ -55,6 +58,15 @@ public interface SqlParserImplFactory {
    */
   @Experimental
   default DdlExecutor getDdlExecutor() {
-    return DdlExecutor.USELESS;
+    List<Provider<DdlExecutor>> ddlExecutorImplList =
+        ServiceLoader.load(DdlExecutor.class).stream().toList();
+    if (ddlExecutorImplList.isEmpty()) {
+      return DdlExecutor.USELESS;
+    } else {
+      if (ddlExecutorImplList.size() > 1) {
+        throw new RuntimeException("Only one DdlExecutor is supported");
+      }
+      return ddlExecutorImplList.get(0).get();
+    }
   }
 }
