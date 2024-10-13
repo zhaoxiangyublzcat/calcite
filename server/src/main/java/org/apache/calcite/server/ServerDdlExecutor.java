@@ -130,10 +130,6 @@ public class ServerDdlExecutor extends DdlExecutorImpl {
         @Override public SqlAbstractParserImpl getParser(Reader stream) {
           return SqlDdlParserImpl.FACTORY.getParser(stream);
         }
-
-        @Override public DdlExecutor getDdlExecutor() {
-          return ServerDdlExecutor.INSTANCE;
-        }
       };
 
 

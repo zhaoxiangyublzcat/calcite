@@ -97,7 +97,6 @@ import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.parser.SqlParseException;
 import org.apache.calcite.sql.parser.SqlParser;
 import org.apache.calcite.sql.parser.SqlParserImplFactory;
-import org.apache.calcite.sql.parser.impl.SqlParserImpl;
 import org.apache.calcite.sql.type.ExtraSqlTypes;
 import org.apache.calcite.sql.type.MeasureSqlType;
 import org.apache.calcite.sql.type.SqlTypeName;
@@ -370,11 +369,7 @@ public class CalcitePrepareImpl implements CalcitePrepare {
   }
 
   @Override public void executeDdl(Context context, SqlNode node) {
-    final CalciteConnectionConfig config = context.config();
-    final SqlParserImplFactory parserFactory =
-        config.parserFactory(SqlParserImplFactory.class, SqlParserImpl.FACTORY);
-    final DdlExecutor ddlExecutor = parserFactory.getDdlExecutor();
-    ddlExecutor.executeDdl(context, node);
+    ((DdlExecutor) node).executeDdl(context, node);
   }
 
   /** Factory method for default SQL parser. */

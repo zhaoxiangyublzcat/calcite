@@ -16,7 +16,6 @@
  */
 package org.apache.calcite.test;
 
-import org.apache.calcite.server.DdlExecutor;
 import org.apache.calcite.sql.parser.SqlAbstractParserImpl;
 import org.apache.calcite.sql.parser.SqlParserImplFactory;
 import org.apache.calcite.sql.parser.babel.SqlBabelParserImpl;
@@ -34,10 +33,6 @@ public class BabelDdlExecutor extends MockDdlExecutor {
       new SqlParserImplFactory() {
         @Override public SqlAbstractParserImpl getParser(Reader stream) {
           return SqlBabelParserImpl.FACTORY.getParser(stream);
-        }
-
-        @Override public DdlExecutor getDdlExecutor() {
-          return BabelDdlExecutor.INSTANCE;
         }
       };
 }

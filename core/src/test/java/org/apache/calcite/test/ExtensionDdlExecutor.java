@@ -16,7 +16,6 @@
  */
 package org.apache.calcite.test;
 
-import org.apache.calcite.server.DdlExecutor;
 import org.apache.calcite.sql.SqlDataTypeSpec;
 import org.apache.calcite.sql.SqlIdentifier;
 import org.apache.calcite.sql.ddl.SqlCreateTable;
@@ -39,10 +38,6 @@ public class ExtensionDdlExecutor extends MockDdlExecutor {
       new SqlParserImplFactory() {
         @Override public SqlAbstractParserImpl getParser(Reader stream) {
           return ExtensionSqlParserImpl.FACTORY.getParser(stream);
-        }
-
-        @Override public DdlExecutor getDdlExecutor() {
-          return ExtensionDdlExecutor.INSTANCE;
         }
       };
 
